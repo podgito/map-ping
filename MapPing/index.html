@@ -1,0 +1,153 @@
+﻿<html>
+<head>
+
+    <style>
+        #container {
+            height: 100%;
+            min-width: 310px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .loading {
+            margin-top: 10em;
+            text-align: center;
+            color: gray;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="container">
+
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.6/proj4.js"></script>
+
+    <script src="http://code.highcharts.com/maps/1.1.5/highmaps.js"></script>
+    <script src="http://code.highcharts.com/maps/1.1.5/modules/data.js"></script>
+
+    <!--<script src="https://code.highcharts.com/maps/highmaps.js"></script>-->
+    <!--<script src="https://code.highcharts.com/maps/modules/exporting.js"></script>-->
+    <!--<script src="https://code.highcharts.com/mapdata/countries/ie/ie-all.js"></script>-->
+    <!--<script src="https://code.highcharts.com/mapdata/custom/british-isles.js"></script>-->
+    <!--<script src="Scripts/maps/ireland.js"></script>-->
+    <script src="Scripts/maps/british-isles.js"></script>
+    <script src="Scripts/jquery.signalR-2.2.0.js"></script>
+
+
+    <script>
+        $(function () {
+
+            var countries = [{
+                'hc-key': 'ie-irl',
+                value: null
+            },
+            {
+                'hc-key': 'gb-nir',
+                value: null
+            }]; //ire and n. ire
+
+            var conn = $.hubConnection();
+
+            var proxy = conn.createHubProxy('mapEventHub');
+            // Create a function that the hub can call to broadcast messages.
+            proxy.on('sendEvent', function (event) {
+                console.log(event);
+
+                event.name = 'Test';
+                data.push(event);
+
+                var chart = $('#container').highcharts();
+
+                chart.series[2].setData(data, true, {
+                    duration: 2500,
+                    easing: 'easeOutBounce'
+                }, true);
+
+
+                setTimeout(function () {
+                    $.each(data, function () {
+                        var index = data.indexOf(event);
+
+                        if (index > -1) {
+                            data.splice(index, 1);
+                        }
+
+                        //console.log(data);
+                    });
+
+                    var chart = $('#container').highcharts();
+
+                    chart.series[2].setData(data, true, {
+                        duration: 2500,
+                        easing: 'easeOutBounce'
+                    }, true);
+
+                }, 5000);
+
+            });
+
+            conn.start();
+
+
+            var data = [];
+
+
+            // Initiate the chart
+            $('#container').highcharts('Map', {
+                title: {
+                    text: 'Highmaps basic lat/lon demo'
+                },
+
+                mapNavigation: {
+                    enabled: true
+                },
+
+                tooltip: {
+                    headerFormat: '',
+                    pointFormat: '<b>{point.z}</b><br>Lat: {point.lat}, Lon: {point.lon}'
+                },
+
+                series: [{
+                    //data: countries,
+                    //mapData: Highcharts.maps['countries/ie/ie-all'],
+                    mapData: Highcharts.maps['custom/british-isles'],
+                    name: 'Basemap',
+                    //joinBy: 'hc-key',
+                    //allAreas: false,
+                    borderColor: '#A0A0A0',
+                    nullColor: 'rgba(200, 200, 200, 0.3)',
+                    showInLegend: false
+                }, {
+                    name: 'Separators',
+                    type: 'mapline',
+                    //data: Highcharts.geojson(Highcharts.maps['countries/gb/gb-all'], 'mapline'),
+                    color: '#707070',
+                    showInLegend: false,
+                    enableMouseTracking: false
+                }, {
+                    // Specify points using lat/lon
+                    type: 'mapbubble',
+                    name: 'Cities',
+                    color: Highcharts.getOptions().colors[1],
+                    data: data,
+                    maxSize: '20%',
+                    zMin: 10,
+                    zMax: 800,
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeOutBounce'
+                    }
+                }]
+            });
+
+
+
+        });
+    </script>
+
+</body>
+</html>
