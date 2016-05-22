@@ -129,7 +129,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bing.html" />
+    <Content Include="bing\animations.css" />
+    <Content Include="bing\animations.js" />
+    <Content Include="bing\maps.js" />
     <Content Include="Global.asax" />
+    <None Include="Properties\PublishProfiles\map-ping - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="index.html" />
     <Content Include="Scripts\jquery-1.6.4.js" />
