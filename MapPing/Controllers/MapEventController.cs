@@ -1,4 +1,5 @@
 ﻿using MapPing.Models;
+using MapPing.Services.Geo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +13,19 @@ namespace MapPing.Controllers
 {
     public class MapEventController : ApiController
     {
+        private readonly IGeoService geoService;
         private readonly IEventHub hub;
         private readonly IRepository repo;
 
-        public MapEventController(IEventHub hub, IRepository repo)
+        public MapEventController(IEventHub hub, IRepository repo, IGeoService geoService)
         {
             this.hub = hub;
             this.repo = repo;
+            this.geoService = geoService;
         }
 
 
-        public void CheckEvents()
+        public Task CheckEvents()
         {
             //Check data source for events
             //Queue events
@@ -41,8 +44,16 @@ namespace MapPing.Controllers
                 }
             });
 
+            return task;
+        }
 
+        public async Task Event(IPEvent ipEvent)
+        {
+            var location = await geoService.GetLocationAsync(ipEvent.IPAdress);
 
+            var mapEvent = new MapEvent(location.Latitude, location.Longitude, ipEvent.Value);
+
+            hub.SendEvent(mapEvent);
         }
 
     }

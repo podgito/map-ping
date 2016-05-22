@@ -25,8 +25,8 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.6/proj4.js"></script>
-
-    <script src="http://code.highcharts.com/maps/1.1.5/highmaps.js"></script>
+    <script src="Scripts/highmaps.src.js"></script>
+    <!--<script src="http://code.highcharts.com/maps/1.1.5/highmaps.js"></script>-->
     <script src="http://code.highcharts.com/maps/1.1.5/modules/data.js"></script>
 
     <!--<script src="https://code.highcharts.com/maps/highmaps.js"></script>-->
@@ -62,31 +62,32 @@
 
                 var chart = $('#container').highcharts();
 
-                chart.series[2].setData(data, true, {
-                    duration: 2500,
-                    easing: 'easeOutBounce'
-                }, true);
+                chart.series[2].addPoint(event, true);
+                //chart.series[2].setData(data, true, {
+                //    duration: 2500,
+                //    easing: 'easeOutBounce'
+                //}, true);
 
+                //Remove the point
+                //setTimeout(function () {
+                //    $.each(data, function () {
+                //        var index = data.indexOf(event);
 
-                setTimeout(function () {
-                    $.each(data, function () {
-                        var index = data.indexOf(event);
+                //        if (index > -1) {
+                //            data.splice(index, 1);
+                //        }
 
-                        if (index > -1) {
-                            data.splice(index, 1);
-                        }
+                //        //console.log(data);
+                //    });
 
-                        //console.log(data);
-                    });
+                //    var chart = $('#container').highcharts();
 
-                    var chart = $('#container').highcharts();
+                //    chart.series[2].setData(data, true, {
+                //        duration: 2500,
+                //        easing: 'easeOutBounce'
+                //    }, true);
 
-                    chart.series[2].setData(data, true, {
-                        duration: 2500,
-                        easing: 'easeOutBounce'
-                    }, true);
-
-                }, 5000);
+                //}, 5000);
 
             });
 
@@ -99,20 +100,16 @@
             // Initiate the chart
             $('#container').highcharts('Map', {
                 title: {
-                    text: 'Highmaps basic lat/lon demo'
+                    text: 'Map-Ping'
                 },
 
                 chart: {
-                borderWidth: 1,
-                
-                animation: {
-                    duration: 2500,
-                    easing: 'easeOutBounce'
-                },
-            },
+                    borderWidth: 1,
 
-                mapNavigation: {
-                    enabled: true
+                    animation: {
+                        duration: 2500,
+                        easing: 'easeOutBounce'
+                    },
                 },
 
                 tooltip: {
@@ -146,10 +143,8 @@
                     maxSize: '20%',
                     zMin: 10,
                     zMax: 800,
-                    animation: {
-                        duration: 1000,
-                        easing: 'easeOutBounce'
-                    }
+                    animation: true,
+                    showInLegend: false,
                 }]
             });
 

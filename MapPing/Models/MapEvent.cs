@@ -2,8 +2,8 @@
 {
     public class MapEvent
     {
-       public double lat { get; set; }
-       public double lon { get; set; }
+        public double lat { get; set; }
+        public double lon { get; set; }
         public double z { get; set; }
 
         public MapEvent(double lat, double lon, double value)
@@ -12,5 +12,11 @@
             this.lon = lon;
             this.z = value;
         }
+    }
+
+    public class IPEvent
+    {
+        public string IPAdress { get; set; }
+        public double Value { get; set; }
     }
 }
