@@ -26,8 +26,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.6/proj4.js"></script>
     <!--<script src="Scripts/highmaps.src.js"></script>-->
-    <script src="http://code.highcharts.com/maps/1.1.5/highmaps.js"></script>
-    <script src="http://code.highcharts.com/maps/1.1.5/modules/data.js"></script>
+    <script src="http://code.highcharts.com/maps/4.2.1/highmaps.js"></script>
+    <script src="http://code.highcharts.com/maps/4.2.1/modules/data.js"></script>
 
     <!--<script src="https://code.highcharts.com/maps/highmaps.js"></script>-->
     <!--<script src="https://code.highcharts.com/maps/modules/exporting.js"></script>-->
@@ -58,11 +58,11 @@
                 console.log(event);
 
                 event.name = 'Test';
-                data.push(event);
+                //data.push(event);
 
                 var chart = $('#container').highcharts();
 
-                chart.series[2].addPoint(event);
+                chart.series[2].addPoint(event, false, false, { easing: 'easeOutBounce', duration: 2000 });
                 //chart.series[2].setData(data, true, {
                 //    duration: 2500,
                 //    easing: 'easeOutBounce'
@@ -106,13 +106,13 @@
                 chart: {
                     borderWidth: 1,
 
-                    //animation: {
-                    //    duration: 2500,
-                    //    easing: 'easeOutBounce'
-                    //},
+                    animation: true
                 },
 
                 plotOptions: {
+                    series: {
+                        animation: true
+                    },
                     mapbubble: {
                         animation: {
                             duration: 3000
