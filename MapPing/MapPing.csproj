@@ -154,7 +154,10 @@
     <Compile Include="Models\MapEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Random\RandomDataRepository.cs" />
+    <Compile Include="Services\Geo\FreeGeoIPDotNetService.cs" />
+    <Compile Include="Services\Geo\IGeoIPService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utility\Pick.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

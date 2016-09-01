@@ -73,6 +73,9 @@ namespace MapPing.App_Start
             kernel.Bind<IRepository>()
                 .To<RandomDataRepository>();
 
+            kernel.Bind<Services.Geo.IGeoService>()
+                .To<Services.Geo.FreeGeoIPDotNetService>();
+
         }        
     }
 }

@@ -11,6 +11,7 @@ using System.Web.Http;
 
 namespace MapPing.Controllers
 {
+    [RoutePrefix("api/")]
     public class MapEventController : ApiController
     {
         private readonly IGeoService geoService;
@@ -40,14 +41,13 @@ namespace MapPing.Controllers
                 {
                     hub.SendEvent(e);
                     await Task.Delay(rand.Next(100, 3000));
-
                 }
             });
 
             return task;
         }
 
-        public async Task Event(IPEvent ipEvent)
+        private async Task Event(IPEvent ipEvent)
         {
             var location = await geoService.GetLocationAsync(ipEvent.IPAdress);
 
