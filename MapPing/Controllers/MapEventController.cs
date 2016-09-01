@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace MapPing.Controllers
 {
-    [RoutePrefix("api/")]
+    //[RoutePrefix("api/")]
     public class MapEventController : ApiController
     {
         private readonly IGeoService geoService;
