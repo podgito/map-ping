@@ -31,7 +31,7 @@ namespace MapPing.Random
             {
                 var lat = Generate(minLat, maxLat);
                 var @long = Generate(minLong, maxLong);
-                var val = GenerateGaussian(100, 100);
+                var val = GenerateGaussian(30, 10);
                 yield return new MapEvent(lat, @long, val);
             }
         }
